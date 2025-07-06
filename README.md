@@ -84,22 +84,42 @@ public class Main {
 ### 3. `Dashboard.java` — Main Menu
 
 - **Purpose:** Central navigation for the application.
-- **Swing Features:** Uses `JFrame`, `JPanel`, `JLabel`, `JButton`, `GridLayout`, and `BorderLayout`.
+- **Swing Features:** Uses `JFrame`, `JPanel`, `JLabel`, `JButton`, `GridLayout`, `BorderLayout`, and now a `JMenuBar` with mnemonics.
 - **Event Handling:** 
-  - `ActionListener` for navigation buttons (Register, View, Logout).
+  - `ActionListener` for navigation buttons (Register, View).
+  - `JMenuBar` with File and Help menus, each with mnemonics (Alt+F, Alt+H) and menu items (Logout, Exit, About) with mnemonics (Alt+L, Alt+E, Alt+A).
   - `WindowListener` to show a message when the window is closing.
 - **Example:**
   ```java
-  registerBtn.addActionListener(e -> {
+  // JMenuBar setup
+  JMenuBar menuBar = new JMenuBar();
+  JMenu fileMenu = new JMenu("File");
+  fileMenu.setMnemonic('F');
+  JMenuItem logoutItem = new JMenuItem("Logout");
+  logoutItem.setMnemonic('L');
+  JMenuItem exitItem = new JMenuItem("Exit");
+  exitItem.setMnemonic('E');
+  fileMenu.add(logoutItem);
+  fileMenu.add(exitItem);
+  menuBar.add(fileMenu);
+
+  JMenu helpMenu = new JMenu("Help");
+  helpMenu.setMnemonic('H');
+  JMenuItem aboutItem = new JMenuItem("About");
+  aboutItem.setMnemonic('A');
+  helpMenu.add(aboutItem);
+  menuBar.add(helpMenu);
+  setJMenuBar(menuBar);
+
+  // Menu item actions
+  logoutItem.addActionListener(e -> {
       dispose();
-      new RegisterEmployee();
+      new LoginPage();
   });
-  addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent e) {
-          JOptionPane.showMessageDialog(Dashboard.this, "Thank you for using the Employee Management System!", "Goodbye", JOptionPane.INFORMATION_MESSAGE);
-      }
-  });
+  exitItem.addActionListener(e -> System.exit(0));
+  aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(this,
+          "Employee Management System\nDeveloped with Java Swing\n2024",
+          "About", JOptionPane.INFORMATION_MESSAGE));
   ```
 
 ---
@@ -234,10 +254,10 @@ public class Main {
 ## Swing & Event Handling Highlights
 
 - **Frames & Panels:** Modular use of `JFrame` and `JPanel` for each major screen.
-- **Menus & Navigation:** Dashboard acts as a central menu; navigation is handled via buttons and frame switching.
+- **Menus & Navigation:** Dashboard now features a `JMenuBar` with File and Help menus, each with keyboard mnemonics for accessibility (Alt+F, Alt+H, etc.).
 - **Tables:** Employee data is displayed and managed using `JTable` and `DefaultTableModel`.
 - **Dialogs:** Uses `JOptionPane` for user feedback, confirmations, and error messages.
-- **Event Listeners:** Demonstrates `ActionListener`, `KeyListener`, `MouseListener`, `ItemListener`, and `WindowListener` for a rich, interactive UI.
+- **Event Listeners:** Demonstrates `ActionListener`, `KeyListener`, `MouseListener`, `ItemListener`, `WindowListener`, and now `JMenuBar` mnemonics for a rich, interactive UI.
 
 ---
 
