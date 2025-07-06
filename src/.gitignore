@@ -1,0 +1,8 @@
+*.class
+*.jar
+*.log
+.DS_Store
+.idea/
+*.iml
+/resources/logo.png
+/lib/ojdbc8.jar 
